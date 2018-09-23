@@ -1,5 +1,6 @@
 package com.dmagdaleno.android.arch.ui.activity
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -15,16 +16,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val viewModel = ViewModelProviders.of(this).get(DataViewModel::class.java)
-        val dataList = viewModel.getDataList()
+        viewModel.getDataList().observe(this, Observer {
+            dataList ->
+                dataList?.let {
+                    val listItems = arrayOf(
+                        dataList[0].toString(),
+                        dataList[1].toString(),
+                        dataList[2].toString()
+                    )
 
-        val listItems = arrayOf(
-            dataList[0].toString(),
-            dataList[1].toString(),
-            dataList[2].toString()
-        )
+                    val listAdapter = ArrayAdapter(this,
+                                    android.R.layout.simple_list_item_1, listItems)
 
-        val listAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
+                    list.adapter = listAdapter
+                }
 
-        list.adapter = listAdapter
+        })
+
     }
 }
