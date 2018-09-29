@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">android-arch-v2</string>
+    <string name="app_name">android-arch</string>
     <string name="load_data">load data</string>
 </resources>
